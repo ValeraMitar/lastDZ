@@ -17,12 +17,13 @@ $.ajax({
     correct();
 });
 
-element.change('option', correct);
+element.change('option', function () {
+    correct();
+});
 
 
 function correct() {
-    var currencyCode = $(this).val(),
-        outmoney;
+    var currencyCode = element.val();
     console.log(currencyCode);
     $.ajax({
             type: 'GET',
@@ -32,7 +33,7 @@ function correct() {
             var rate = response.Cur_OfficialRate,
                 scale = response.Cur_Scale;
             console.log(response);
-            outmoney = (enterMoney.val() * scale / rate).toFixed(2);
+            var outmoney = (enterMoney.val() * scale / rate).toFixed(2);
             outMoney.text(`${outmoney} ${currencyCode}`);
             enterMoney.on('input', function () {
                 outmoney = (enterMoney.val() * scale / rate).toFixed(2);
